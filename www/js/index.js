@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var storage = window.localStorage;
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -34,16 +36,22 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        
+        var pokeList = storage.getItem('PokeList');
+        
+        if(pokeList == null){            
+             $.get("http://www.pokeapi.co/api/v2/pokedex/1", function (data){
+                var pokemonList = data["pokemon_entries"];
+                storage.setItem('PokeList', pokemonList);  
+                alert('pokelist set') ;
+             });
+        }
+        else{
+            alert('local pokelist found!');
+        }
+           
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
     }
 };
