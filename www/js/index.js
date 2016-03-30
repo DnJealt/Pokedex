@@ -18,9 +18,30 @@
  */
 var storage = window.localStorage;
 
+var parseData = function(data){
+    var parsedData = JSON.parse(data);
+    return parsedData;
+}
+
 var populateList = function(data){
-     alert(data);
-    var pokeListView = $["pokeListView"];
+    /* Right here, data is a JSON Object in the following format:
+      {
+        "entry_number": 1,
+        "pokemon_species": {
+                "name": "bulbasaur",
+                "url": "http://www.pokeapi.co/api/v2/pokemon-species/1/"
+            }
+     },
+    */
+    
+    // alert(derivedData[1]['pokemon_species']['name']);
+    console.log(data)
+        
+    for(var i = 0; i < 700; i++){
+        $('#pokeListView').append('<li>'+ data[i]["pokemon_species"]['name'] +'</li>');
+    }
+    
+  
     
 }
 
@@ -36,6 +57,9 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
+    
+    
+    
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -43,23 +67,25 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
-        // var pokeList = storage.getItem('PokeList');      
-        $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
-                //  alert(data["pokemon_entries"][1]["pokemon_species"]["name"]);
-                var pokemonList = JSON.parse(data);
-                // storage.setItem('PokeList', pokemonList);  
-                alert(pokemonList["pokemon_entries"]);
+        // Retrieve the list from LocalStorage
+        storage.removeItem('PokeList');
+        var pokeList = storage.getItem('PokeList');   
+       
+       //If there is none, fetch it and store it
+        if(pokeList == null){              
+              $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
+                var parsedList = parseData(data);
                 
-                // populateList(pokemonList[0]["pokemon_species"]["name"]);
-               
+                var pokemonList = parsedList["pokemon_entries"];         
+                populateList(pokemonList);  
+                
+                storage.setItem('PokeList', pokemonList);               
              });
-        // if(pokeList == null){            
-             
-        // }
-        // else{
-        //     console.log(pokeList);
-        //     populateList('baab');
-        // }
+        }
+        else{
+            var list = JSON.parse(pokeList);
+            populateList(list);
+        }
            
     },
     // Update DOM on a Received Event
