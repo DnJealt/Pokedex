@@ -18,6 +18,12 @@
  */
 var storage = window.localStorage;
 
+var populateList = function(data){
+     alert(data);
+    var pokeListView = $["pokeListView"];
+    
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -37,18 +43,23 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
-        var pokeList = storage.getItem('PokeList');
-        
-        if(pokeList == null){            
-             $.get("http://www.pokeapi.co/api/v2/pokedex/1", function (data){
-                var pokemonList = data["pokemon_entries"];
-                storage.setItem('PokeList', pokemonList);  
-                alert('pokelist set') ;
+        // var pokeList = storage.getItem('PokeList');      
+        $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
+                //  alert(data["pokemon_entries"][1]["pokemon_species"]["name"]);
+                var pokemonList = JSON.parse(data);
+                // storage.setItem('PokeList', pokemonList);  
+                alert(pokemonList["pokemon_entries"]);
+                
+                // populateList(pokemonList[0]["pokemon_species"]["name"]);
+               
              });
-        }
-        else{
-            alert('local pokelist found!');
-        }
+        // if(pokeList == null){            
+             
+        // }
+        // else{
+        //     console.log(pokeList);
+        //     populateList('baab');
+        // }
            
     },
     // Update DOM on a Received Event
