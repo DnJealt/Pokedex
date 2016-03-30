@@ -1,6 +1,6 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="nl.avans.mbd1.s2071376" version="1.0.0">
   <name>Pokedex</name>
-  <description>Do you wanna build a snowman??</description>
+  <description>Do you wanna complete a pokedex??</description>
   <author href="http://phonegap.com" email="support@phonegap.com">Joost van Rijsinge en Jelte van Tartwijk</author>
   <content src="index.html"/>
   <preference name="permissions" value="none"/>
