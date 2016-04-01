@@ -36,7 +36,7 @@ var populateList = function(data){
     for(var i = 0; i < 721; i++){
         $('#pokeListView').append('<li>'+ data[i]["pokemon_species"]['name'] +'</li>');
     }
-    $('#pokeListView').listview();
+    $('#pokeListView').listview('refresh');
   
     
 }
