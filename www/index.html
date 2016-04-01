@@ -40,10 +40,17 @@
     <div id="mainPage" data-role="page" data-theme="a">
         <div data-role="header" data-position="inline">
             <h1>Pokédex</h1>
+            <a href="#" data-icon="gear" class="ui-btn-right">Settings</a>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#" class="ui-btn-active">Pokédex</a></li>
+                    <li><a href="#">My Pokémon</a></li>
+                </ul>
+            </div>
         </div>
 
         <div role="main" class="ui-content">
-            <ul id="pokeListView" data-role="listview" data-filter="true" data-filter-placeholder="Search pokémon..." data-inset="true">
+            <ul id="pokeListView" data-role="listview" data-filter="true" data-filter-placeholder="Search Pokémon..." data-inset="true">
 
             </ul>
         </div>
