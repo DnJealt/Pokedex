@@ -37,10 +37,10 @@ var populateList = function(data){
     // alert(derivedData[1]['pokemon_species']['name']);
     console.log(data)
         
-    for(var i = 0; i < 700; i++){
+    for(var i = 0; i < 721; i++){
         $('#pokeListView').append('<li>'+ data[i]["pokemon_species"]['name'] +'</li>');
     }
-    $('#pokeListView').listview();
+    $('#pokeListView').listview('refresh');
   
     
 }
