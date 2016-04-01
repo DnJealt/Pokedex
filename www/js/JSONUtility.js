@@ -3,6 +3,7 @@ function JSONUtility() {
     var storage = window.localStorage;
     
     self.clear = function(){
+        alert('Cache Cleared!');
         storage.clear();
     }
     

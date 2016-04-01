@@ -31,7 +31,6 @@ var populateList = function(data){
     */
     
     // alert(derivedData[1]['pokemon_species']['name']);
-    console.log(data)
         
     for(var i = 0; i < 721; i++){
         $('#pokeListView').append('<li>'+ data[i]["pokemon_species"]['name'] +'</li>');
@@ -62,6 +61,10 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        
+        $('#clearcache').on('click', function(){
+            utility.clear();
+        })
         
         var pokeList = utility.getJSONData('PokeList')
        
