@@ -16,22 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var storage = window.localStorage;
 
-var parseData = function(data){
-    var parsedData = JSON.parse(data);
-    return parsedData;
-}
+var utility = new JSONUtility();
 
 var populateList = function(data){
-    /* Right here, data is a JSON Object in the following format:
+    /* Right here, data is an array of JSON Objects in the following format:
       {
         "entry_number": 1,
         "pokemon_species": {
                 "name": "bulbasaur",
                 "url": "http://www.pokeapi.co/api/v2/pokemon-species/1/"
             }
-     },
+      }
     */
     
     // alert(derivedData[1]['pokemon_species']['name']);
@@ -67,24 +63,22 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
-        // Retrieve the list from LocalStorage
-        storage.removeItem('PokeList');
-        var pokeList = storage.getItem('PokeList');   
+        var pokeList = utility.getJSONData('PokeList')
        
        //If there is none, fetch it and store it
         if(pokeList == null){              
               $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
-                var parsedList = parseData(data);
                 
-                var pokemonList = parsedList["pokemon_entries"];         
-                populateList(pokemonList);  
+                var parsedData = utility.parseData(data);
+                utility.storeData('PokeList', parsedData);
                 
-                storage.setItem('PokeList', pokemonList);               
+                var pokemonList = parsedData["pokemon_entries"];         
+                populateList(pokemonList);                  
              });
         }
         else{
-            var list = JSON.parse(pokeList);
-            populateList(list);
+            var pokemonList = pokeList["pokemon_entries"];           
+            populateList(pokemonList);
         }
            
     },

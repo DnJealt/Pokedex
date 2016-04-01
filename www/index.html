@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="css/themes/PokeTheme.css" />
     <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
     <title>Pokédex</title>
 </head>
 
@@ -48,7 +49,6 @@
                 </ul>
             </div>
         </div>
-
         <div role="main" class="ui-content">
             <ul id="pokeListView" data-role="listview" data-filter="true" data-filter-placeholder="Search Pokémon..." data-inset="true">
 
@@ -61,19 +61,14 @@
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/JSONUtility.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
     </script>
 
 
-    <script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
-    <!--<script type="text/javascript">
-            $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
-                    alert(data["pokemon_entries"][1]["pokemon_species"]["name"]);
-            });
-        </script>-->
+
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
 </body>
-
 </html>
