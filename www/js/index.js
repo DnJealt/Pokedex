@@ -70,14 +70,22 @@ var app = {
        
        //If there is none, fetch it and store it
         if(pokeList == null){              
-              $.get("http://www.pokeapi.co/api/v2/pokedex/1", function(data) {
+                $.ajax({
+                    url: "http://www.pokeapi.co/api/v2/pokedex/1",
+                    type: 'GET',
+                    success: function(data){
+                        var parsedData = utility.parseData(data);
+                        utility.storeData('PokeList', parsedData);
                 
-                var parsedData = utility.parseData(data);
-                utility.storeData('PokeList', parsedData);
+                        var pokemonList = parsedData["pokemon_entries"];         
+                        populateList(pokemonList);                  
+                     },
+                     error: function(err){
+                         alert(err);
+                     }                   
+                });
                 
-                var pokemonList = parsedData["pokemon_entries"];         
-                populateList(pokemonList);                  
-             });
+                
         }
         else{
             var pokemonList = pokeList["pokemon_entries"];           
