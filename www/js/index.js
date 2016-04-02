@@ -32,11 +32,13 @@ var populateList = function(data){
     
     // alert(derivedData[1]['pokemon_species']['name']);
         
+    alert(data.count);
     for(var i = 0; i < 721; i++){
         $('#pokeListView').append('<li><a href="#">'+ data[i]["pokemon_species"]['name'] +'</a></li>');
     }
     $('#pokeListView').listview('refresh');
   
+  $.mobile.loading('hide');
     
 }
 
@@ -67,7 +69,7 @@ var app = {
         })
         
         var pokeList = utility.getJSONData('PokeList')
-       
+       $.mobile.loading('show');
        //If there is none, fetch it and store it
         if(pokeList == null){              
                 $.ajax({
@@ -78,10 +80,12 @@ var app = {
                         utility.storeData('PokeList', parsedData);
                 
                         var pokemonList = parsedData["pokemon_entries"];         
-                        populateList(pokemonList);                  
+                        populateList(pokemonList); 
+                        $.mobile.loading('hide');                 
                      },
                      error: function(err){
-                         alert(err);
+                         console.log(err);
+                         $.mobile.loading('hide');  
                      }                   
                 });
                 
