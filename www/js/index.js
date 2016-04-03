@@ -68,7 +68,7 @@ var app = {
         
         $('#pokeListView').delegate('li', 'tap', function (event) {
             
-            event.preventDefault();
+
             
             var index = $(this).index();  
                     
