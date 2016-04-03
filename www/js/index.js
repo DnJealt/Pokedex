@@ -29,18 +29,16 @@ var populateList = function(data){
             }
       }
     */
-    
-    // alert(derivedData[1]['pokemon_species']['name']);
-        
-    alert(data.count);
-    for(var i = 0; i < 721; i++){
-        $('#pokeListView').append('<li><a href="#">'+ data[i]["pokemon_species"]['name'] +'</a></li>');
+    for(var i = 0; i < data.length; i++){
+        $('#pokeListView').append('<li><a href="detail.html">'+ data[i]["pokemon_species"]['name'] +'</a></li>');
     }
     $('#pokeListView').listview('refresh');
   
   $.mobile.loading('hide');
     
 }
+
+var PokemonList;
 
 var app = {
     // Application Constructor
@@ -66,7 +64,18 @@ var app = {
         
         $('#clearcache').on('click', function(){
             utility.clear();
-        })
+        });
+        
+        $('#pokeListView').delegate('li', 'tap', function (event) {
+            
+            event.preventDefault();
+            
+            var index = $(this).index();  
+                    
+            utility.storeData('selectedPokemon', PokemonList[index]);
+
+        });
+                
         
         var pokeList = utility.getJSONData('PokeList')
        $.mobile.loading('show');
@@ -79,7 +88,8 @@ var app = {
                         var parsedData = utility.parseData(data);
                         utility.storeData('PokeList', parsedData);
                 
-                        var pokemonList = parsedData["pokemon_entries"];         
+                        var pokemonList = parsedData["pokemon_entries"];   
+                        PokemonList = pokemonList;      
                         populateList(pokemonList); 
                         $.mobile.loading('hide');                 
                      },
@@ -92,7 +102,8 @@ var app = {
                 
         }
         else{
-            var pokemonList = pokeList["pokemon_entries"];           
+            var pokemonList = pokeList["pokemon_entries"]; 
+            PokemonList = pokemonList;           
             populateList(pokemonList);
         }
            
