@@ -7,9 +7,12 @@ function JSONUtility() {
         alert('Cache Cleared!');        
     }
     
-    ///Only needed when you have a json 'something' and need to parse it.
     self.parseData = function(jsonData){
-        return JSON.parse(jsonData);
+        if (typeof jsonData === 'string'){
+            return JSON.parse(jsonData);
+        }
+        return jsonData;
+        
     }
     
     ///If you already have JSON and just need to store it.

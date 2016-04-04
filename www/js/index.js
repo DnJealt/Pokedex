@@ -85,8 +85,9 @@ var app = {
                     url: "http://www.pokeapi.co/api/v2/pokedex/1",
                     type: 'GET',
                     success: function(data){
+                        
                         var parsedData = utility.parseData(data);
-                        utility.storeData('PokeList', parsedData);
+                        utility.storeData('PokeList', data);
                 
                         var pokemonList = parsedData["pokemon_entries"];   
                         PokemonList = pokemonList;      
