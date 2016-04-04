@@ -39,7 +39,12 @@ function populateDetails(data) {
         $('#detailType1').append(data['types'][0]['type']['name']);
     }
 
-
+    $('#detailHp').append(data['stats'][5]['base_stat']);
+    $('#detailSpeed').append(data['stats'][0]['base_stat']);
+    $('#detailAtt').append(data['stats'][4]['base_stat']);
+    $('#detailDef').append(data['stats'][3]['base_stat']);
+    $('#detailSpAtt').append(data['stats'][2]['base_stat']);
+    $('#detailSpDef').append(data['stats'][1]['base_stat']);
 
     $.mobile.loading('hide');
 }
