@@ -17,10 +17,13 @@ function JSONUtility() {
     
     ///If you already have JSON and just need to store it.
     self.storeData = function(storageKey, jsonData) {
+        var data = jsonData;
         
-        var string = JSON.stringify(jsonData);
+        if (!(typeof jsonData === 'string')){
+            data = JSON.stringify(jsonData);
+        }
         
-        storage.setItem(storageKey, string);
+        storage.setItem(storageKey, data);
         
         return true;        
     }
@@ -33,7 +36,11 @@ function JSONUtility() {
             return null;
         }
         else{
-            return JSON.parse(storedString);
+            if(typeof storedString === 'string'){
+                 return JSON.parse(storedString);
+            }
+            return storedString
+           
         }     
     }  
 };

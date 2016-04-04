@@ -67,15 +67,10 @@ var app = {
         });
         
         $('#pokeListView').delegate('li', 'tap', function (event) {
-            
-
-            
             var index = $(this).index();  
                     
             utility.storeData('selectedPokemon', PokemonList[index]);
-
-        });
-                
+        });                
         
         var pokeList = utility.getJSONData('PokeList')
        $.mobile.loading('show');
