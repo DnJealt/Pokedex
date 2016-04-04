@@ -3,18 +3,44 @@
     <script type="text/javascript" src="js/detail.js"></script>
     <div data-role="header" data-position="inline">
         <h1 id="pokemon-name"></h1>
+        <button id="backBtn" class="ui-btn-left" data-icon="back">back</button>
     </div>
 
     <div id="details" role="main" class="ui-content">
-        <table>
+        <table class="ui-body-d ui-shadow table-stripe ui-responsive" width="100%">
             <tr>
-                <td rowspan="2" id="detailImg"></td>
+                <td colspan="2" rowspan="2" id="detailImg"></td>
                 <th>Height:</th>
+                <td id="detailHeight"></td>
                 <th>Weight:</th>
+                <td id="detailWeight"></td>
             </tr>
             <tr>
-                <td id="detailHeight"></td>
-                <td id="detailWeight"></td>
+                <th>Type 1:</th>
+                <td id="detailType1"></td>
+                <th>Type 2:</th>
+                <td id="detailType2"></td>
+            </tr>
+            <tr>
+                <th colspan="6">Base stats:</th>
+            </tr>
+            <tr>
+                <th colspan="2">HP:</th>
+                <td id="detailHp"></td>
+                <th colspan="2">Speed:</th>
+                <td id="detailSpeed"></td>
+            </tr>
+            <tr>
+                <th colspan="2">Attack:</th>
+                <td id="detailAtt"></td>
+                <th colspan="2">SpecialAtt:</th>
+                <td id="detailSpAtt"></td>
+            </tr>
+            <tr>
+                <th colspan="2">Defense:</th>
+                <td id="detailDef"></td>
+                <th colspan="2">SpecialDef:</th>
+                <td id="detailDef"></td>
             </tr>
         </table>
     </div>
