@@ -4,6 +4,16 @@ var selectedPokemon = utility.getJSONData('selectedPokemon');
 setHeader();
 loadPokemonData();
 
+function formatNumber(digit) {
+    if(digit < 10){
+        return '00' + digit;
+    }
+    if(digit >= 10 && digit < 100){
+        return '0' + digit;
+    }    
+    return digit;    
+}
+
 function setHeader() {
     $('#pokemon-name').append(selectedPokemon['entry_number'] + "." + selectedPokemon['pokemon_species']['name']);
 }
@@ -45,6 +55,19 @@ function populateDetails(data) {
     $('#detailDef').append(data['stats'][3]['base_stat']);
     $('#detailSpAtt').append(data['stats'][2]['base_stat']);
     $('#detailSpDef').append(data['stats'][1]['base_stat']);
+    
+    // Get the id of the current pokemon and format it to a three digit number string
+    var formattedId = formatNumber(data['id']);
+    
+    // $('#serebii-link').attr('data-url', 'http://www.serebii.net/pokedex-xy/' + formattedId + '.shtml')
+    
+    $("#serebii-link").on('click', function (e) {
+        e.preventDefault();
+        window.open('http://www.serebii.net/pokedex-xy/' + formattedId + '.shtml', '_system');
+    });
+    
+    // Fill the href attribute of the Serebii link
+    
 
     $.mobile.loading('hide');
 }
