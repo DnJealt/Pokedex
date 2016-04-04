@@ -1,7 +1,6 @@
 var utility = new JSONUtility();
 var selectedPokemon = utility.getJSONData('selectedPokemon');
 
-$.mobile.loading('show');
 setHeader();
 loadPokemonData();
 
@@ -11,6 +10,7 @@ function setHeader() {
 
 function loadPokemonData() {
     var thisUrl = 'http://www.pokeapi.co/api/v2/pokemon/' + selectedPokemon['entry_number'];
+    $.mobile.loading('show');
     $.ajax({
         url: thisUrl,
         type: 'GET',
