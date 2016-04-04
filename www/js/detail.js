@@ -5,7 +5,7 @@ setHeader();
 loadPokemonData();
 
 function setHeader() {
-    $('#pokemon-name').append(selectedPokemon['pokemon_species']['name']);
+    $('#pokemon-name').append(selectedPokemon['entry_number'] + "." + selectedPokemon['pokemon_species']['name']);
 }
 
 function loadPokemonData() {
