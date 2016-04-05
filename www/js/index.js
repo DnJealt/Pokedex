@@ -38,6 +38,7 @@ var populateList = function(data){
     
 }
 
+
 var PokemonList;
 
 var app = {

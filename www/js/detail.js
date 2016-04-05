@@ -92,20 +92,26 @@ function findDest(lat, lon) {
     watchHeading();
 
     destinationPosition = new LatLon(lat, lon);
-    alert(destinationPosition);
+    console.log(destinationPosition);
     updateScreen();
 }
 
 //on Switches from detail page to main page disables compass and GPS tracking.
 $('backBtn').on('click', function() {
-    if (positionId) navigator.geolocation.clearWatch(positionId);
-    if (headingId) navigator.compass.clearWatch(headingId);
+    if (positionId){
+       navigator.geolocation.clearWatch(positionId); 
+    } 
+    if (headingId){
+       navigator.compass.clearWatch(headingId);
+    }
 });
 
 // Function for position tracking.
 function watchPosition() {
     // alert('wathing position start');
-    if (positionId) navigator.geolocation.clearWatch(positionId);
+    if (positionId) {
+        navigator.geolocation.clearWatch(positionId);
+    }
     positionId = navigator.geolocation.watchPosition(onPositionUpdate, onError, {
         enableHighAccuracy: true,
         timeout: 1000,
@@ -116,14 +122,17 @@ function watchPosition() {
 // Function for compass tracking.
 function watchHeading() {
     // alert('watching heading start');
-    if (headingId) navigator.compass.clearWatch(headingId);
+    if (headingId){
+        navigator.compass.clearWatch(headingId);
+    } 
     headingId = navigator.compass.watchHeading(onCompassUpdate, onError, {
-        frequency: 100
+        frequency: 2000
     });
 }
 
 // Event handler for position change.
 function onPositionUpdate(position) {
+    console.log('New position: ' + position);
     currentPosition = new LatLon(position.coords.latitude, position.coords.longitude);
     updateScreen();
 }
@@ -131,6 +140,7 @@ function onPositionUpdate(position) {
 // Event handler for compass change.
 function onCompassUpdate(heading) {
     currentHeading = heading.trueHeading >= 0 ? Math.round(heading.trueHeading) : Math.round(heading.magneticHeading);
+    console.log('current heading: ' + currentHeading)
     updateScreen();
 }
 
