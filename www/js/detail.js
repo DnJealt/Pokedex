@@ -87,7 +87,7 @@ var currentHeading;
 
 // Function to start tracking position and compass when user selects a destination.
 function findDest(lat, lon) {
-    alert('me be here in the stuffs of location getting');
+    // alert('me be here in the stuffs of location getting');
     watchPosition();
     watchHeading();
 
@@ -104,7 +104,7 @@ $('backBtn').on('click', function() {
 
 // Function for position tracking.
 function watchPosition() {
-    alert('wathing position start');
+    // alert('wathing position start');
     if (positionId) navigator.geolocation.clearWatch(positionId);
     positionId = navigator.geolocation.watchPosition(onPositionUpdate, onError, {
         enableHighAccuracy: true,
@@ -115,7 +115,7 @@ function watchPosition() {
 
 // Function for compass tracking.
 function watchHeading() {
-    alert('watching heading start');
+    // alert('watching heading start');
     if (headingId) navigator.compass.clearWatch(headingId);
     headingId = navigator.compass.watchHeading(onCompassUpdate, onError, {
         frequency: 100
@@ -136,7 +136,7 @@ function onCompassUpdate(heading) {
 
 // Function to update information on navigation screen.
 function updateScreen() {
-    alert('update screen');
+    // alert('update screen');
     destinationBearing = Math.round(currentPosition.bearingTo(destinationPosition));
     $('#distance').html(Math.round(currentPosition.distanceTo(destinationPosition) * 1000) + " Meters");
 
