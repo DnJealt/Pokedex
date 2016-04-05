@@ -68,14 +68,22 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
+        var myPokemonEnabled = false;
+        
         $('#clearcache').on('click', function(){
             utility.clear();
         });
         
         $('#pokeListView').delegate('li', 'tap', function (event) {
             var index = $(this).index();  
-                    
-            utility.storeData('selectedPokemon', PokemonList[index]);
+            
+            if(myPokemonEnabled){
+                var pokemonCaught = utility.getJSONData('pokemonCaught');
+                utility.storeData('selectedPokemon', pokemonCaught[index]);
+            }
+            else{
+                utility.storeData('selectedPokemon', PokemonList[index]);
+            }       
         });        
         
         
@@ -113,10 +121,12 @@ var app = {
         }
         
         $('#pokedex-button').on('click', function(e){
+            myPokemonEnabled = false;
             populateList(PokemonList);
         });
            
         $('#mypokemon-button').on('click', function(e){
+            myPokemonEnabled = true;
             var pokemonCaught = utility.getJSONData('pokemonCaught');
             populateList(pokemonCaught);
         });
