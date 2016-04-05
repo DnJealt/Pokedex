@@ -19,6 +19,7 @@
 
 var utility = new JSONUtility();
 
+
 var populateList = function(data){
     /* Right here, data is an array of JSON Objects in the following format:
       {
@@ -29,15 +30,19 @@ var populateList = function(data){
             }
       }
     */
+    // Empty the list first
+    $('#pokeListView').empty();
+    
     for(var i = 0; i < data.length; i++){
         $('#pokeListView').append('<li><a href="detail.html">'+ data[i]["pokemon_species"]['name'] +'</a></li>');
     }
+    
+    // Refresh the list to show the newly added items.
     $('#pokeListView').listview('refresh');
   
   $.mobile.loading('hide');
     
 }
-
 
 var PokemonList;
 
@@ -71,9 +76,12 @@ var app = {
             var index = $(this).index();  
                     
             utility.storeData('selectedPokemon', PokemonList[index]);
-        });                
+        });        
         
-        var pokeList = utility.getJSONData('PokeList')
+        
+        
+       var pokeList = utility.getJSONData('PokeList');
+       var pokemonCaught = utility.getJSONData('pokemonCaught');
        $.mobile.loading('show');
        //If there is none, fetch it and store it
         if(pokeList == null){              
@@ -103,7 +111,14 @@ var app = {
             PokemonList = pokemonList;           
             populateList(pokemonList);
         }
+        
+        $('#pokedex-button').on('click', function(e){
+            populateList(PokemonList);
+        });
            
+        $('#mypokemon-button').on('click', function(e){
+            populateList(pokemonCaught);
+        });
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

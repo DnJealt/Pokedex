@@ -37,10 +37,9 @@ function JSONUtility() {
         }
         else{
             if(typeof storedString === 'string'){
-                 return JSON.parse(storedString);
-            }
-            return storedString
-           
+                return JSON.parse(storedString);
+            }            
+            return storedString;           
         }     
     }  
 };

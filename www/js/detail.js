@@ -1,5 +1,6 @@
 var utility = new JSONUtility();
 var selectedPokemon = utility.getJSONData('selectedPokemon');
+var pokemonCaught = utility.getJSONData('pokemonCaught');
 
 setHeader();
 loadPokemonData();
@@ -14,7 +15,28 @@ function formatNumber(digit) {
     return digit;
 }
 
+function catchPokemon(){
+    console.log(selectedPokemon);
+    if(pokemonCaught == null){
+        pokemonCaught = [selectedPokemon];
+    }
+    else{
+        pokemonCaught.push(selectedPokemon);        
+    }
+    utility.storeData('pokemonCaught', pokemonCaught);
+    alert('You caught a '+selectedPokemon['pokemon_species']['name']+'!');
+    console.log(pokemonCaught);
+    
+}
+
 function setHeader() {
+    if(pokemonCaught != null){
+        console.log($.inArray(selectedPokemon))
+         // Check if pokemon is already caught.
+        if(!($.inArray(selectedPokemon) < 0)) {
+            $('#catchpokemon').hide();
+        }        
+    }
     $('#pokemon-name').append(selectedPokemon['entry_number'] + "." + selectedPokemon['pokemon_species']['name']);
 }
 
@@ -66,8 +88,11 @@ function populateDetails(data) {
         e.preventDefault();
         window.open('http://www.serebii.net/pokedex-xy/' + formattedId + '.shtml', '_system');
     });
-
-    // Fill the href attribute of the Serebii link
+    
+    // Bind an event to the catch pokemon button.
+    $('#catchpokemon').on('click', function(e){
+        catchPokemon();
+    })
 
 
     $.mobile.loading('hide');
@@ -172,3 +197,4 @@ function updateScreen() {
 function onError() {
     console.log('Error');
 }
+
