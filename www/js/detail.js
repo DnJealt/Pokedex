@@ -84,6 +84,7 @@ var positionId;
 var headingId;
 var currentPosition;
 var currentHeading;
+var distanceTo;
 
 // Function to start tracking position and compass when user selects a destination.
 function findDest(lat, lon) {
@@ -148,7 +149,15 @@ function onCompassUpdate(heading) {
 function updateScreen() {
     // alert('update screen');
     destinationBearing = Math.round(currentPosition.bearingTo(destinationPosition));
-    $('#distance').html(Math.round(currentPosition.distanceTo(destinationPosition)) + " Meters");
+    distanceTo = Math.round(currentPosition.distanceTo(destinationPosition));
+    $('#distance').html(distanceTo + " Meters");
+    
+    if(distanceTo < 10){
+        $("catchThatPokemon").show();
+        
+    } else if (distanceTo > 10){
+        $("catchThatPokemon").hide();
+    }
 
     var degreesOfDiff = destinationBearing - currentHeading; // The difference between destination bearing and current heading is the direction of the arrow.
 
