@@ -98,13 +98,17 @@ function findDest(lat, lon) {
 }
 
 //on Switches from detail page to main page disables compass and GPS tracking.
-$('backBtn').on('click', function() {
-    if (positionId){
-       navigator.geolocation.clearWatch(positionId); 
-    } 
-    if (headingId){
-       navigator.compass.clearWatch(headingId);
+$('#backBtn').on('click', function() {
+    if (positionId) {
+        navigator.geolocation.clearWatch(positionId);
     }
+    if (headingId) {
+        navigator.compass.clearWatch(headingId);
+    }
+});
+
+$('#catchThatPokemon').on('click', function() {
+    alert('You caught a ' + selectedPokemon['pokemon_species']['name']);
 });
 
 // Function for position tracking.
@@ -123,9 +127,9 @@ function watchPosition() {
 // Function for compass tracking.
 function watchHeading() {
     // alert('watching heading start');
-    if (headingId){
+    if (headingId) {
         navigator.compass.clearWatch(headingId);
-    } 
+    }
     headingId = navigator.compass.watchHeading(onCompassUpdate, onError, {
         frequency: 250
     });
@@ -151,12 +155,12 @@ function updateScreen() {
     destinationBearing = Math.round(currentPosition.bearingTo(destinationPosition));
     distanceTo = Math.round(currentPosition.distanceTo(destinationPosition));
     $('#distance').html(distanceTo + " Meters");
-    
-    if(distanceTo < 10){
-        $("catchThatPokemon").show();
-        
-    } else if (distanceTo > 10){
-        $("catchThatPokemon").hide();
+
+    if (distanceTo < 25) {
+        $('#catchThatPokemon').show();
+
+    } else if (distanceTo > 25) {
+        $('#catchThatPokemon').hide();
     }
 
     var degreesOfDiff = destinationBearing - currentHeading; // The difference between destination bearing and current heading is the direction of the arrow.
