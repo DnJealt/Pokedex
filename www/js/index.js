@@ -81,7 +81,7 @@ var app = {
         
         
        var pokeList = utility.getJSONData('PokeList');
-       var pokemonCaught = utility.getJSONData('pokemonCaught');
+       
        $.mobile.loading('show');
        //If there is none, fetch it and store it
         if(pokeList == null){              
@@ -117,6 +117,7 @@ var app = {
         });
            
         $('#mypokemon-button').on('click', function(e){
+            var pokemonCaught = utility.getJSONData('pokemonCaught');
             populateList(pokemonCaught);
         });
     },
