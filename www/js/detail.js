@@ -114,7 +114,7 @@ function watchPosition() {
     }
     positionId = navigator.geolocation.watchPosition(onPositionUpdate, onError, {
         enableHighAccuracy: true,
-        timeout: 1000,
+        timeout: 250,
         maxiumumAge: 0
     });
 }
@@ -126,13 +126,13 @@ function watchHeading() {
         navigator.compass.clearWatch(headingId);
     } 
     headingId = navigator.compass.watchHeading(onCompassUpdate, onError, {
-        frequency: 2000
+        frequency: 250
     });
 }
 
 // Event handler for position change.
 function onPositionUpdate(position) {
-    console.log('New position: ' + position);
+    console.log(position);
     currentPosition = new LatLon(position.coords.latitude, position.coords.longitude);
     updateScreen();
 }
@@ -148,7 +148,7 @@ function onCompassUpdate(heading) {
 function updateScreen() {
     // alert('update screen');
     destinationBearing = Math.round(currentPosition.bearingTo(destinationPosition));
-    $('#distance').html(Math.round(currentPosition.distanceTo(destinationPosition) * 1000) + " Meters");
+    $('#distance').html(Math.round(currentPosition.distanceTo(destinationPosition)) + " Meters");
 
     var degreesOfDiff = destinationBearing - currentHeading; // The difference between destination bearing and current heading is the direction of the arrow.
 
