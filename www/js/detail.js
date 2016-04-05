@@ -15,6 +15,19 @@ function formatNumber(digit) {
     return digit;
 }
 
+function alreadyCaught(){
+    var name = selectedPokemon['pokemon_species']['name'];
+    if(pokemonCaught != null){        
+        for(var i = 0; i < pokemonCaught.length; i++){
+            if(name == pokemonCaught[i]['pokemon_species']['name']){
+                return true;
+            }
+        }        
+    }
+    return false;
+    
+}
+
 function catchPokemon(){
     console.log(selectedPokemon);
     if(pokemonCaught == null){
@@ -30,13 +43,8 @@ function catchPokemon(){
 }
 
 function setHeader() {
-    if(pokemonCaught != null){
-        console.log($.inArray(selectedPokemon))
-         // Check if pokemon is already caught.
-        if(!($.inArray(selectedPokemon) < 0)) {
-            $('#catchpokemon').hide();
-        }        
-    }
+    $('#arrow').hide();
+    $('#catchpokemon').hide();
     $('#pokemon-name').append(selectedPokemon['entry_number'] + "." + selectedPokemon['pokemon_species']['name']);
 }
 
@@ -49,9 +57,12 @@ function loadPokemonData() {
         success: function(data) {
             var parsedData = utility.parseData(data);
             console.log(parsedData);
-            populateDetails(parsedData);
-            findDest(51.688187, 5.286406);
-
+            populateDetails(parsedData); 
+            
+            console.log(alreadyCaught());           
+            if(!alreadyCaught()){
+                 findDest(51.688187, 5.286406);
+            }
         },
         error: function(err) {
             console.log(err);
@@ -132,10 +143,6 @@ $('#backBtn').on('click', function() {
     }
 });
 
-$('#catchThatPokemon').on('click', function() {
-    alert('You caught a ' + selectedPokemon['pokemon_species']['name']);
-});
-
 // Function for position tracking.
 function watchPosition() {
     // alert('wathing position start');
@@ -182,10 +189,12 @@ function updateScreen() {
     $('#distance').html(distanceTo + " Meters");
 
     if (distanceTo < 25) {
-        $('#catchThatPokemon').show();
-
-    } else if (distanceTo > 25) {
-        $('#catchThatPokemon').hide();
+        $('#arrow').hide();
+        $('#catchpokemon').show();
+    }   
+    else{
+        $('#arrow').show();        
+        $('#catchpokemon').hide();
     }
 
     var degreesOfDiff = destinationBearing - currentHeading; // The difference between destination bearing and current heading is the direction of the arrow.
