@@ -28,6 +28,7 @@ function loadPokemonData() {
             var parsedData = utility.parseData(data);
             console.log(parsedData);
             populateDetails(parsedData);
+            findDest(51, 5);
 
         },
         error: function(err) {
@@ -50,11 +51,11 @@ function populateDetails(data) {
     }
 
     $('#detailHp').append(data['stats'][5]['base_stat']);
-    $('#detailSpeed').append(data['stats'][0]['base_stat']);
     $('#detailAtt').append(data['stats'][4]['base_stat']);
     $('#detailDef').append(data['stats'][3]['base_stat']);
     $('#detailSpAtt').append(data['stats'][2]['base_stat']);
     $('#detailSpDef').append(data['stats'][1]['base_stat']);
+    $('#detailSpeed').append(data['stats'][0]['base_stat']);
 
     // Get the id of the current pokemon and format it to a three digit number string
     var formattedId = formatNumber(data['id']);
@@ -75,3 +76,76 @@ function populateDetails(data) {
 
 
 //compass to geolocation
+
+// Global variables.
+var destinationPosition;
+var destinationBearing;
+var positionId;
+var headingId;
+var currentPosition;
+var currentHeading;
+
+// Function to start tracking position and compass when user selects a destination.
+function findDest(lat, lon) {
+    alert('me be here in the stuffs of location getting');
+    watchPosition();
+    watchHeading();
+
+    destinationPosition = new LatLon(lat, lon);
+    alert(destinationPosition);
+    updateScreen();
+}
+
+//on Switches from detail page to main page disables compass and GPS tracking.
+$('backBtn').on('click', function() {
+    if (positionId) navigator.geolocation.clearWatch(positionId);
+    if (headingId) navigator.compass.clearWatch(headingId);
+});
+
+// Function for position tracking.
+function watchPosition() {
+    alert('wathing position start');
+    if (positionId) navigator.geolocation.clearWatch(positionId);
+    positionId = navigator.geolocation.watchPosition(onPositionUpdate, onError, {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maxiumumAge: 0
+    });
+}
+
+// Function for compass tracking.
+function watchHeading() {
+    alert('watching heading start');
+    if (headingId) navigator.compass.clearWatch(headingId);
+    headingId = navigator.compass.watchHeading(onCompassUpdate, onError, {
+        frequency: 100
+    });
+}
+
+// Event handler for position change.
+function onPositionUpdate(position) {
+    currentPosition = new LatLon(position.coords.latitude, position.coords.longitude);
+    updateScreen();
+}
+
+// Event handler for compass change.
+function onCompassUpdate(heading) {
+    currentHeading = heading.trueHeading >= 0 ? Math.round(heading.trueHeading) : Math.round(heading.magneticHeading);
+    updateScreen();
+}
+
+// Function to update information on navigation screen.
+function updateScreen() {
+    alert('update screen');
+    destinationBearing = Math.round(currentPosition.bearingTo(destinationPosition));
+    $('#distance').html(Math.round(currentPosition.distanceTo(destinationPosition) * 1000) + " Meters");
+
+    var degreesOfDiff = destinationBearing - currentHeading; // The difference between destination bearing and current heading is the direction of the arrow.
+
+    $('#arrow').css("-webkit-transform", "rotate(" + degreesOfDiff + "deg)");
+}
+
+// Error handler function.
+function onError() {
+    console.log('Error');
+}
