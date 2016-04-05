@@ -28,7 +28,7 @@ function loadPokemonData() {
             var parsedData = utility.parseData(data);
             console.log(parsedData);
             populateDetails(parsedData);
-            findDest(51, 5);
+            findDest(51.688187, 5.286406);
 
         },
         error: function(err) {
